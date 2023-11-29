@@ -1,14 +1,16 @@
-#include "HangMan.h"
-#include <Menu.h>
+#include "Menu.h"
+#include <HangMan.h>
 #include <iostream>
 
 using namespace std;
 
 static void _windowClear() {
+
 	system("cls");
+
 }
 
-void HM_option() {
+void mainMenu() {
 
 	int op = 0;
 
@@ -16,21 +18,21 @@ void HM_option() {
 
 		_windowClear();
 
-		cout << "Welcome to Hang Man\n" << endl;
-		cout << "1 - Play" << endl;
-		cout << "2 - Main menu" << endl;
+		cout << "Welcome\n" << endl;
+		cout << "1 - Play Hang Man" << endl;
+		cout << "2 - About" << endl;
 		cout << "3 - Quit" << endl;
 		cout << "> ";
 		cin >> op;
 
 		switch (op) {
 		case 1:
+			Run_HangMan();
 			//play game
+			return;
 			break;
 		case 2:
-			//menu
-			Run_Menu();
-			return;
+			//credits
 			break;
 		case 3:
 			//quit
@@ -42,6 +44,9 @@ void HM_option() {
 	}
 }
 
-void Run_HangMan(){
-	HM_option();
+//main game
+void Run_Menu(){
+	
+	mainMenu();
+
 }

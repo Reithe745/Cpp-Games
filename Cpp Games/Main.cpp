@@ -1,7 +1,7 @@
-#include <HangMan.h>
+#include <Menu.h>
 
 int main() {
 
-	Run_HangMan();
+	Run_Menu();
 
 }
