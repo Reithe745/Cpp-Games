@@ -3,7 +3,7 @@
 
 using namespace std;
 
-void _windowClear() {
+static void _windowClear() {
 
 	system("cls");
 
@@ -14,7 +14,10 @@ void Run_HangMan(){
 	
 	int op = 0;
 
-	while (op < 1 or op > 3) {
+	while (true) {
+
+		_windowClear();
+
 		cout << "Welcome to Hang Man\n" << endl;
 		cout << "1 - Play" << endl;
 		cout << "2 - About" << endl;
