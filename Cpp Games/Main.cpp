@@ -1,7 +1,5 @@
-#include <iostream>
-
-using namespace std;
+#include <HangMan.h>
 
 int main() {
-	cout << "hello world" << endl;
+	Run_HangMan();
 }
