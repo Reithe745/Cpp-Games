@@ -1,3 +1,20 @@
+/*
+  _    _                        __  __
+ | |  | |                      |  \/  |
+ | |__| |  __ _  _ __    __ _  | \  / |  __ _  _ __
+ |  __  | / _` || '_ \  / _` | | |\/| | / _` || '_ \
+ | |  | || (_| || | | || (_| | | |  | || (_| || | | |
+ |_|  |_| \__,_||_| |_| \__, | |_|  |_| \__,_||_| |_|
+						 __/ |
+						|___/
+ ___
+|	|
+|  \O/
+|	|
+|  / \
+*/
+
+
 #include "HangMan.h"
 #include <Menu.h>
 #include <iostream>
@@ -184,36 +201,29 @@ public:
 		switch (attempts)
 		{
 		case 0:
-			cout << " ___\n" << "|   |\n" << "|\n" << "|\n" << "|\n" << endl;
+			cout << " ___\n|   |\n|\n|\n|\n" << endl;
 			break;
 		case 1:
-			cout << " ___\n" << "|   |\n" << "|   O \n" << "|\n" << "|\n" << endl;
+			cout << " ___\n|   |\n|   O \n|\n|\n" << endl;
 			break;
 		case 2:
-			cout << " ___\n" << "|   |\n" << "|   O \n" << "|   |\n" << "|\n" << endl;
+			cout << " ___\n|   |\n|   O \n|   |\n|\n" << endl;
 			break;
 		case 3:
-			cout << " ___\n" << "|   |\n" << "|  \\O \n" << "|   |\n" << "|\n" << endl;
+			cout << " ___\n|   |\n|  \\O \n|   |\n|\n" << endl;
 			break;
 		case 4:
-			cout << " ___\n" << "|   |\n" << "|  \\O/ \n" << "|   |\n" << "|\n" << endl;
+			cout << " ___\n|   |\n|  \\O/ \n|   |\n|\n" << endl;
 			break;
 		case 5:
-			cout << " ___\n" << "|   |\n" << "|  \\O/ \n" << "|   |\n" << "|    \\\n" << endl;
+			cout << " ___\n|   |\n|  \\O/ \n|   |\n|    \\\n" << endl;
 			break;
 		case 6:
-			cout << " ___\n" << "|   |\n" << "|  \\O/ \n" << "|   |\n" << "|  / \\\n" << endl;
+			cout << " ___\n|   |\n|  \\O/ \n|   |\n|  / \\\n" << endl;
 			break;
 		default:
 			break;
 		}
-		/*
-		 ___
-		|	|
-		|  \O/
-		|	|
-		|  / \
-		*/
 	}
 
 	//define the word for the game
@@ -232,6 +242,12 @@ private:
 	int MAXattempts = 6;
 };
 
+void hangManLogo()
+{
+	cout << " ___\n|   |\n|  \\O/ \n|   |\n|  / \\\n" << endl;
+	cout << "Welcome to Hang Man\n" << endl;
+}
+
 void HM_option() {
 
 	int op = 0;
@@ -242,9 +258,10 @@ void HM_option() {
 
 		_windowClear();
 
-		cout << "Welcome to Hang Man\n" << endl;
-		cout << "1 - 1 Player" << endl;
-		cout << "2 - 2 Players" << endl;
+		hangManLogo();
+
+		cout << "1 - Single Player" << endl;
+		cout << "2 - Multi Player" << endl;
 		cout << "3 - Main menu" << endl;
 		cout << "4 - Quit" << endl;
 		cout << "> ";

@@ -1,3 +1,13 @@
+/*
+  __  __         _          __  __
+ |  \/  |       (_)        |  \/  |
+ | \  / |  __ _  _  _ __   | \  / |  ___  _ __   _   _
+ | |\/| | / _` || || '_ \  | |\/| | / _ \| '_ \ | | | |
+ | |  | || (_| || || | | | | |  | ||  __/| | | || |_| |
+ |_|  |_| \__,_||_||_| |_| |_|  |_| \___||_| |_| \__,_|
+
+*/
+
 #include "Menu.h"
 #include <HangMan.h>
 #include <iostream>
@@ -23,10 +33,12 @@ void mainMenu() {
 
 		_windowClear();
 
-		cout << "Welcome\n" << endl;
-		cout << "1 - Play Hang Man" << endl;
-		cout << "2 - About" << endl;
-		cout << "3 - Quit" << endl;
+		cout << "Welcome to the C++ game hub\n" << endl;
+		cout << "1: Play Hang Man" << endl;
+		cout << "2: Play Battleship" << endl;
+		cout << "3: Hash" << endl;
+		cout << "4: About" << endl;
+		cout << "5: Quit" << endl;
 		cout << "> ";
 		cin >> op;
 
@@ -37,10 +49,16 @@ void mainMenu() {
 			return;
 			break;
 		case 2:
+			//battleship
+			break;
+		case 3:
+			//hash
+			break;
+		case 4:
 			//about
 			about();
 			break;
-		case 3:
+		case 5:
 			//quit
 			return;
 			break;
