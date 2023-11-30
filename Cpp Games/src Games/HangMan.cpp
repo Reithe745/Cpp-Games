@@ -19,6 +19,7 @@ public:
 	void resetGameConstruct()
 	{
 		attempts = 0;
+		HMdrawRef = 0;
 		lettersSaid = "";
 		gameWord = "";
 		maskedWord = "";
@@ -99,6 +100,7 @@ public:
 		}
 		if (control == 0) {
 			attempts++;
+			HMdrawRef++;
 		}
 	}
 
@@ -108,7 +110,7 @@ public:
 		if (gameWord == word) {
 			maskedWord = word;
 		}
-		attempts = MAXattempts;
+		//attempts = MAXattempts;
 	}
 
 	//check if the masked word has been reveled (End Of Game)
@@ -120,6 +122,7 @@ public:
 	//basic text on the screen for game loop
 	void showGameStatus() 
 	{
+		drawHangMan();
 		cout << "Word: " << maskedWord << " (Size: " << gameWord.size() << ")" << endl;
 		cout << "Attempts left: " << MAXattempts - attempts << endl;
 		cout << "Letters used: ";
@@ -147,12 +150,14 @@ public:
 	void win_loose() {
 		if (checkEOG()) {
 			_windowClear();
+			drawHangMan();
 			cout << "You win!!!!!" << endl;
 			cout << "Word: " << gameWord << endl;
 			system("pause");
 		}
 		else {
 			_windowClear();
+			drawHangMan();
 			cout << "Better luck next time..." << endl;
 			cout << "Word: " << gameWord << endl;
 			system("pause");
@@ -173,20 +178,58 @@ public:
 		}
 	}
 
+	//draw hang man
+	void drawHangMan()
+	{
+		switch (attempts)
+		{
+		case 0:
+			cout << " ___\n" << "|   |\n" << "|\n" << "|\n" << "|\n" << endl;
+			break;
+		case 1:
+			cout << " ___\n" << "|   |\n" << "|   O \n" << "|\n" << "|\n" << endl;
+			break;
+		case 2:
+			cout << " ___\n" << "|   |\n" << "|   O \n" << "|   |\n" << "|\n" << endl;
+			break;
+		case 3:
+			cout << " ___\n" << "|   |\n" << "|  \\O \n" << "|   |\n" << "|\n" << endl;
+			break;
+		case 4:
+			cout << " ___\n" << "|   |\n" << "|  \\O/ \n" << "|   |\n" << "|\n" << endl;
+			break;
+		case 5:
+			cout << " ___\n" << "|   |\n" << "|  \\O/ \n" << "|   |\n" << "|    \\\n" << endl;
+			break;
+		case 6:
+			cout << " ___\n" << "|   |\n" << "|  \\O/ \n" << "|   |\n" << "|  / \\\n" << endl;
+			break;
+		default:
+			break;
+		}
+		/*
+		 ___
+		|	|
+		|  \O/
+		|	|
+		|  / \
+		*/
+	}
+
 	//define the word for the game
 	void deffGameWord() 
 	{
 		gameWord = words[rand() % words.size()];
 	}
-		
 
 private:
 	vector<string> words = { "github", "multiplayer", "unreal" };
 	string lettersSaid;
 	string gameWord;
 	string maskedWord;
+	int HMdrawRef = 0;
 	int attempts = 0;
-	int MAXattempts = 7;
+	int MAXattempts = 6;
 };
 
 void HM_option() {
