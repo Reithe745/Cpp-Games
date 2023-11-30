@@ -5,9 +5,14 @@
 using namespace std;
 
 static void _windowClear() {
-
 	system("cls");
+}
 
+void about() {
+	_windowClear();
+	cout << "List of games as a study project of C++ developed by Yuri Lacerda\n" << endl;
+	cout << "Use this project as a template or sujest at the isues area some other game ideas";
+	system("pause");
 }
 
 void mainMenu() {
@@ -32,7 +37,8 @@ void mainMenu() {
 			return;
 			break;
 		case 2:
-			//credits
+			//about
+			about();
 			break;
 		case 3:
 			//quit
