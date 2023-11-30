@@ -124,7 +124,7 @@ public:
 		cout << "Attempts left: " << MAXattempts - attempts << endl;
 		cout << "Letters used: ";
 		showLettersSaid();
-		cout << "Your letter: ";
+		cout << "Your letter (type 1 for whole guess): ";
 	}
 
 	//show option to try the whole word
