@@ -13,6 +13,7 @@
 #include <Menu.h>
 #include <iostream>
 #include <string>
+#include <time.h>
 
 using namespace std;
 
@@ -28,6 +29,7 @@ public:
 	void singleplayerMode()
 	{
 		populateBoard();
+		AutoSetBoatPosition();
 		playLoop();
 	}
 
@@ -42,6 +44,23 @@ public:
 		}
 	}
 
+	//bot seting boat opsition 
+	void AutoSetBoatPosition()
+	{
+		for (int i = 0; i < 10; i++) {
+			int L = rand() % 10;
+			int C = rand() % 10;
+			
+			if (RealBoard[L][C] == 'A') {
+				RealBoard[L][C] = '*';
+			}
+			else {
+				i--;
+			}
+		}
+	}
+
+	//get a line and column from the player
 	void XY()
 	{
 		int line, column;
@@ -56,6 +75,7 @@ public:
 		}
 	}
 
+	//unmask the spot chosen
 	bool CheckIfSpotWasBombed(int i, int j)
 	{
 		return MaskedBoard[i][j] == RealBoard[i][j];
@@ -73,7 +93,7 @@ public:
 		for (int i = 0; i < 10; i++) {
 			cout << i << " ";
 			for (int j = 0; j < 10; j++) {
-				cout << " " << MaskedBoard[i][j];
+				cout << " " << RealBoard[i][j];			//TODO change the "realboard" to "maskedboard"
 			}
 			cout << endl;
 		}
@@ -147,5 +167,6 @@ void BS_option() {
 
 void Run_Battleship()
 {
+	srand((unsigned) time(NULL));
 	BS_option();
 }
