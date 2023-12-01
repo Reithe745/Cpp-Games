@@ -91,7 +91,8 @@ public:
 	}
 
 	//see if the option of trying the whole word was selected
-	bool checkTryWholeWord(char letter) {
+	bool checkTryWholeWord(char letter)
+	{
 		return letter == '1';
 	}
 
@@ -148,7 +149,8 @@ public:
 	}
 
 	//show option to try the whole word
-	void showTryWholeWord(){
+	void showTryWholeWord()
+	{
 		_windowClear();
 		cout << "Take your chance!" << endl;
 		cout << "Word: " << maskedWord << " (Size: " << gameWord.size() << ")" << endl;
@@ -156,7 +158,8 @@ public:
 	}
 
 	//show all letters already used
-	void showLettersSaid() {
+	void showLettersSaid()
+	{
 		for (const auto i : lettersSaid) {
 			cout << i << " ";
 		}
@@ -164,7 +167,8 @@ public:
 	}
 
 	//inform if game was won or lost
-	void win_loose() {
+	void win_loose()
+	{
 		if (checkEOG()) {
 			_windowClear();
 			drawHangMan();
@@ -182,14 +186,16 @@ public:
 	}
 
 	//multiplayer word difine
-	void manualDeffGameWord() {
+	void manualDeffGameWord()
+	{
 		_windowClear();
 		cout << "Say the word to be guessed: ";
 		cin >> gameWord;
 	}
 
 	//mask the word
-	void maskWord() {
+	void maskWord()
+	{
 		for (int i = 0; i < gameWord.size(); i++) {
 			maskedWord += "_";
 		}
@@ -248,7 +254,8 @@ void hangManLogo()
 	cout << "Welcome to Hang Man\n" << endl;
 }
 
-void HM_option() {
+void HM_option()
+{
 
 	int op = 0;
 
@@ -291,7 +298,8 @@ void HM_option() {
 	}
 }
 
-void Run_HangMan() {
+void Run_HangMan()
+{
 
 	srand((unsigned)time(NULL));
 
