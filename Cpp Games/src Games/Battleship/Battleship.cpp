@@ -22,6 +22,18 @@ static void _windowClear()
 	system("cls");
 }
 
+struct BoatPosition {
+	int Line;
+	int Column;
+};
+
+struct BoatList {
+	BoatPosition Boat5[5];
+	BoatPosition Boat4[4];
+	BoatPosition Boat3[3];
+	BoatPosition Boat2[2];
+};
+
 class BS_Game_obj {
 
 public:
@@ -47,10 +59,10 @@ public:
 	//bot seting boat opsition 
 	void AutoSetBoatPosition()
 	{
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 5; i++) {
 			int L = rand() % 10;
 			int C = rand() % 10;
-			
+
 			if (RealBoard[L][C] == 'A') {
 				RealBoard[L][C] = '*';
 			}
@@ -112,6 +124,7 @@ public:
 
 private:
 
+	BoatList Boats;
 	char RealBoard[10][10];
 	char MaskedBoard[10][10];
 	char PlayerBoard[10][10];
