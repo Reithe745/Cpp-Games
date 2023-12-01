@@ -28,10 +28,10 @@ struct BoatPosition {
 };
 
 struct BoatList {
-	BoatPosition Boat5[5];
-	BoatPosition Boat4[4];
-	BoatPosition Boat3[3];
-	BoatPosition Boat2[2];
+	BoatPosition Boat4_4[4];
+	BoatPosition Boat3_3[3];
+	BoatPosition Boat2_3[3];
+	BoatPosition Boat1_2[2];
 };
 
 class BS_Game_obj {
