@@ -9,7 +9,8 @@
 */
 
 #include "Menu.h"
-#include <HangMan.h>
+#include <Hangman/HangMan.h>
+#include <Battleship/Battleship.h>
 #include <iostream>
 
 using namespace std;
@@ -44,12 +45,14 @@ void mainMenu() {
 
 		switch (op) {
 		case 1:
-			Run_HangMan();
 			//play game
+			Run_HangMan();
 			return;
 			break;
 		case 2:
 			//battleship
+			Run_Battleship();
+			return;
 			break;
 		case 3:
 			//hash

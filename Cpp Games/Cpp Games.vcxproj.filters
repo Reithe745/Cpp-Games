@@ -21,7 +21,10 @@
     <ClCompile Include="src Games\Menu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src Games\HangMan.cpp">
+    <ClCompile Include="src Games\Hangman\HangMan.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src Games\Battleship\Battleship.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -29,7 +32,10 @@
     <ClInclude Include="src Games\Menu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src Games\HangMan.h">
+    <ClInclude Include="src Games\Hangman\HangMan.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src Games\Battleship\Battleship.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
