@@ -42,7 +42,8 @@ public:
 		}
 	}
 
-	void XY() {
+	void XY()
+	{
 		int line, column;
 
 		cout << "Bomb Line: ";
@@ -55,7 +56,8 @@ public:
 		}
 	}
 
-	bool CheckIfSpotWasBombed(int i, int j) {
+	bool CheckIfSpotWasBombed(int i, int j)
+	{
 		return MaskedBoard[i][j] == RealBoard[i][j];
 	}
 
