@@ -25,6 +25,7 @@ static void _windowClear()
 struct BoatPosition {
 	int Line;
 	int Column;
+	int size;
 };
 
 struct BoatList {
@@ -124,7 +125,7 @@ public:
 
 private:
 
-	BoatList Boats;
+	BoatList * Boats;
 	char RealBoard[10][10];
 	char MaskedBoard[10][10];
 	char PlayerBoard[10][10];
