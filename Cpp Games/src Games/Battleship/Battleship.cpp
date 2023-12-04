@@ -30,10 +30,10 @@ struct BoatList {
 		int size;
 	};
 
-	Boatinfo Boat4_4[4];
-	Boatinfo Boat3_3[3];
-	Boatinfo Boat2_3[3];
-	Boatinfo Boat1_2[2];
+	Boatinfo Boat4[4];
+	Boatinfo Boat3[3];
+	Boatinfo Boat2[3];
+	Boatinfo Boat1[2];
 };
 
 class BS_Game_obj {
@@ -44,7 +44,7 @@ public:
 	{
 		populateBoard();
 		PopulateBoats();
-		//AutoSetBoatPosition();
+		AutoSetBoatPosition();
 		playLoop();
 	}
 
@@ -59,27 +59,20 @@ public:
 		}
 	}
 
-	//bot seting boat opsition 
+	//bot seting boat opsition
 	void AutoSetBoatPosition()
 	{
 		for (int i = 0; i < 5; i++) {
 			int L = RandVal(10);
 			int C = RandVal(10);
-			int Rotation = rand() % 4;
+			int Roation = RandVal(2); // 0 Vertical, 1 Horizontal
 
-			//rotation -> up 1 / right 2 / down 3 / left 4
-
-			//first
 			if (RealBoard[L][C] == '~') {
-
-			}
-
-			/*if (RealBoard[L][C] == 'A') {
 				RealBoard[L][C] = '*';
 			}
 			else {
 				i--;
-			}*/
+			}
 		}
 	}
 
@@ -89,10 +82,10 @@ public:
 
 	//give at the start of the game
 	void PopulateBoats() {
-		Boats.Boat1_2->size = 2;
-		Boats.Boat2_3->size = 3;
-		Boats.Boat3_3->size = 3;
-		Boats.Boat4_4->size = 4;
+		Boats.Boat1->size = 2;
+		Boats.Boat2->size = 3;
+		Boats.Boat3->size = 3;
+		Boats.Boat4->size = 4;
 	}
 
 	//get a line and column from the player
@@ -128,7 +121,7 @@ public:
 		for (int i = 0; i < 10; i++) {
 			cout << i << " ";
 			for (int j = 0; j < 10; j++) {
-				cout << " " << RealBoard[i][j];			//TODO change the "realboard" to "maskedboard"
+				cout << " " << MaskedBoard[i][j];			//TODO change the "realboard" to "maskedboard"
 			}
 			cout << endl;
 		}
