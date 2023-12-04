@@ -22,18 +22,19 @@ static void _windowClear()
 	system("cls");
 }
 
+struct Boatinfo {
+	int * Line;
+	int * Column;
+	int size;
+	int nameNumber;
+};
+
 struct BoatList {
 
-	struct Boatinfo {
-		int Line;
-		int Column;
-		int size;
-	};
-
-	Boatinfo Boat4[4];
-	Boatinfo Boat3[3];
-	Boatinfo Boat2[3];
-	Boatinfo Boat1[2];
+	Boatinfo Boat4;
+	Boatinfo Boat3;
+	Boatinfo Boat2;
+	Boatinfo Boat1;
 };
 
 class BS_Game_obj {
@@ -44,36 +45,68 @@ public:
 	{
 		populateBoard();
 		PopulateBoats();
-		AutoSetBoatPosition();
+		AutoSetBoatPosition(Boats.Boat1);
 		playLoop();
 	}
 
 	void playLoop()
 	{
 		while (true) {
-
 			_windowClear();
-
+			cout << Boats.Boat1.Line[0] << endl; // debug
 			showMaskedBoard();
-			XY();
+			system("pause");
+			singleplayerMode();
+			//XY();
+		}
+	}
+
+	bool checkValidPostion(int L, int C, int Rot, int BoatSize) {
+		if (Rot == 0) {
+			return C + BoatSize < 10;
+		}
+		else {
+			return L + BoatSize < 10;
 		}
 	}
 
 	//bot seting boat opsition
-	void AutoSetBoatPosition()
+	void AutoSetBoatPosition(Boatinfo boat)
 	{
-		for (int i = 0; i < 5; i++) {
-			int L = RandVal(10);
-			int C = RandVal(10);
-			int Roation = RandVal(2); // 0 Vertical, 1 Horizontal
+		int L = 10;
+		int C = 10;
+		int Rotation = 0; // 0 Vertical, 1 Horizontal
 
-			if (RealBoard[L][C] == '~') {
-				RealBoard[L][C] = '*';
+		while (!checkValidPostion(L, C, Rotation, boat.size)) {
+			L = RandVal(10);
+			C = RandVal(10);
+			Rotation = RandVal(2); // 0 Vertical, 1 Horizontal
+		}
+
+		for (int i = 0; i < boat.size; i++) {
+			if (Rotation == 0) {
+				boat.Column[i] = C - i;
+				this->RealBoard[L][C - i] = 'A';
 			}
 			else {
-				i--;
+				boat.Line[i] = L - i;
+				this->RealBoard[L - i][C] = 'N';
 			}
+			//Need to fix bug, on the autosetboatlocation, it can appear at the end of the line and go to the other
 		}
+
+		//for (int i = 0; i < 5; i++) {
+		//	int L = RandVal(10);
+		//	int C = RandVal(10);
+		//	int Roation = RandVal(2); // 0 Vertical, 1 Horizontal
+
+		//	if (RealBoard[L][C] == '~') {
+		//		RealBoard[L][C] = '*';
+		//	}
+		//	else {
+		//		i--;
+		//	}
+		//}
 	}
 
 	int RandVal(int maxValue) {
@@ -82,10 +115,20 @@ public:
 
 	//give at the start of the game
 	void PopulateBoats() {
-		Boats.Boat1->size = 2;
-		Boats.Boat2->size = 3;
-		Boats.Boat3->size = 3;
-		Boats.Boat4->size = 4;
+		Boats.Boat1.Line = Boats.Boat1.Column = new int[2];
+		Boats.Boat2.Line = Boats.Boat2.Column = new int[3];
+		Boats.Boat3.Line = Boats.Boat3.Column = new int[3];
+		Boats.Boat4.Line = Boats.Boat4.Column = new int[4];
+
+		Boats.Boat1.size = 2;
+		Boats.Boat2.size = 3;
+		Boats.Boat3.size = 3;
+		Boats.Boat4.size = 4;
+
+		Boats.Boat1.nameNumber = 1;
+		Boats.Boat2.nameNumber = 2;
+		Boats.Boat3.nameNumber = 3;
+		Boats.Boat4.nameNumber = 4;
 	}
 
 	//get a line and column from the player
@@ -121,7 +164,7 @@ public:
 		for (int i = 0; i < 10; i++) {
 			cout << i << " ";
 			for (int j = 0; j < 10; j++) {
-				cout << " " << MaskedBoard[i][j];			//TODO change the "realboard" to "maskedboard"
+				cout << " " << RealBoard[i][j];			//TODO change the "realboard" to "maskedboard"
 			}
 			cout << endl;
 		}
