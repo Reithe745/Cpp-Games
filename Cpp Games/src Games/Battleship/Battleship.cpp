@@ -22,17 +22,18 @@ static void _windowClear()
 	system("cls");
 }
 
-struct BoatPosition {
-	int Line;
-	int Column;
-	int size;
-};
-
 struct BoatList {
-	BoatPosition Boat4_4[4];
-	BoatPosition Boat3_3[3];
-	BoatPosition Boat2_3[3];
-	BoatPosition Boat1_2[2];
+
+	struct Boatinfo {
+		int Line;
+		int Column;
+		int size;
+	};
+
+	Boatinfo Boat4_4[4];
+	Boatinfo Boat3_3[3];
+	Boatinfo Boat2_3[3];
+	Boatinfo Boat1_2[2];
 };
 
 class BS_Game_obj {
@@ -42,7 +43,8 @@ public:
 	void singleplayerMode()
 	{
 		populateBoard();
-		AutoSetBoatPosition();
+		PopulateBoats();
+		//AutoSetBoatPosition();
 		playLoop();
 	}
 
@@ -61,16 +63,36 @@ public:
 	void AutoSetBoatPosition()
 	{
 		for (int i = 0; i < 5; i++) {
-			int L = rand() % 10;
-			int C = rand() % 10;
+			int L = RandVal(10);
+			int C = RandVal(10);
+			int Rotation = rand() % 4;
 
-			if (RealBoard[L][C] == 'A') {
+			//rotation -> up 1 / right 2 / down 3 / left 4
+
+			//first
+			if (RealBoard[L][C] == '~') {
+
+			}
+
+			/*if (RealBoard[L][C] == 'A') {
 				RealBoard[L][C] = '*';
 			}
 			else {
 				i--;
-			}
+			}*/
 		}
+	}
+
+	int RandVal(int maxValue) {
+		return rand() % maxValue;
+	}
+
+	//give at the start of the game
+	void PopulateBoats() {
+		Boats.Boat1_2->size = 2;
+		Boats.Boat2_3->size = 3;
+		Boats.Boat3_3->size = 3;
+		Boats.Boat4_4->size = 4;
 	}
 
 	//get a line and column from the player
@@ -117,7 +139,7 @@ public:
 	{
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 10; j++) {
-				RealBoard[i][j] = 'A';
+				RealBoard[i][j] = '~';
 				MaskedBoard[i][j] = '*';
 			}
 		}
@@ -125,7 +147,7 @@ public:
 
 private:
 
-	BoatList * Boats;
+	BoatList Boats;
 	char RealBoard[10][10];
 	char MaskedBoard[10][10];
 	char PlayerBoard[10][10];
@@ -184,3 +206,68 @@ void Run_Battleship()
 	srand((unsigned) time(NULL));
 	BS_option();
 }
+
+/*
+const int tamanhoTabuleiro = 10;
+
+struct Barco {
+	int tamanho;
+	char direcao; // 'H' para horizontal, 'V' para vertical
+	int linha;
+	int coluna;
+};
+
+class BatalhaNaval {
+public:
+	BatalhaNaval() {
+		inicializarTabuleiro();
+		posicionarBarcos();
+		exibirTabuleiro();
+	}
+
+private:
+	char tabuleiro[tamanhoTabuleiro][tamanhoTabuleiro];
+
+	void inicializarTabuleiro() {
+		for (int i = 0; i < tamanhoTabuleiro; ++i) {
+			for (int j = 0; j < tamanhoTabuleiro; ++j) {
+				tabuleiro[i][j] = '~'; // '~' representa água
+			}
+		}
+	}
+
+	bool posicaoValida(int linha, int coluna, int tamanho, char direcao) {
+		if (direcao == 'H') {
+			return coluna + tamanho <= tamanhoTabuleiro;
+		} else if (direcao == 'V') {
+			return linha + tamanho <= tamanhoTabuleiro;
+		}
+		return false;
+	}
+
+	void posicionarBarco(Barco& barco) {
+		do {
+			barco.linha = rand() % tamanhoTabuleiro;
+			barco.coluna = rand() % tamanhoTabuleiro;
+			barco.direcao = (rand() % 2 == 0) ? 'H' : 'V';
+		} while (!posicaoValida(barco.linha, barco.coluna, barco.tamanho, barco.direcao));
+
+		for (int i = 0; i < barco.tamanho; ++i) {
+			if (barco.direcao == 'H') {
+				tabuleiro[barco.linha][barco.coluna + i] = 'B'; // 'B' representa um pedaço de barco
+			} else if (barco.direcao == 'V') {
+				tabuleiro[barco.linha + i][barco.coluna] = 'B';
+			}
+		}
+	}
+
+	void posicionarBarcos() {
+		Barco barco2 = {2, ' ', 0, 0};
+		Barco barco3 = {3, ' ', 0, 0};
+		Barco barco4 = {4, ' ', 0, 0};
+
+		posicionarBarco(barco2);
+		posicionarBarco(barco3);
+		posicionarBarco(barco4);
+	}
+*/
