@@ -44,24 +44,12 @@ public:
 	void singleplayerMode()
 	{
 		populateBoard();
-		PopulateBoats();
+		InitBoats();
 		AutoSetBoatPosition(Boats.Boat1);
 		AutoSetBoatPosition(Boats.Boat2);
 		AutoSetBoatPosition(Boats.Boat3);
 		AutoSetBoatPosition(Boats.Boat4);
 		playLoop();
-	}
-
-	void DEBUGG()
-	{
-		cout << Boats.Boat1.Line[0] << Boats.Boat1.Column[0] << endl;
-		cout << Boats.Boat1.Line[1] << Boats.Boat1.Column[1] << endl;
-		cout << Boats.Boat2.Line[0] << Boats.Boat2.Column[0] << endl;
-		cout << Boats.Boat2.Line[1] << Boats.Boat2.Column[1] << endl;
-		cout << Boats.Boat3.Line[0] << Boats.Boat3.Column[0] << endl;
-		cout << Boats.Boat3.Line[1] << Boats.Boat3.Column[1] << endl;
-		cout << Boats.Boat4.Line[0] << Boats.Boat4.Column[0] << endl;
-		cout << Boats.Boat4.Line[1] << Boats.Boat4.Column[1] << endl;
 	}
 
 	void playLoop()
@@ -72,11 +60,10 @@ public:
 			showMaskedBoard();
 
 			XY();
-
-			//break;
 		}
 	}
 
+	//see if position tryed is valid for a boat
 	bool checkValidPostion(int L, int C, int Rot, int BoatSize) {
 		if (Rot == 0) {
 			return C + BoatSize < 10;
@@ -101,14 +88,20 @@ public:
 
 		for (int i = 0; i < boat.size; i++) {
 			if (Rotation == 0) {
-				boat.Column[i] = C + i;
+
+				boat.Column[i] = C;
 				boat.Line[i] = L;
-				RealBoard[L][C + i] = boat.nameNumber;
+				RealBoard[L][C] = boat.nameNumber;
+
+				C++;
 			}
 			else {
-				boat.Line[i] = L + i;
+
+				boat.Line[i] = L;
 				boat.Column[i] = C;
-				RealBoard[L + i][C] = boat.nameNumber;
+				RealBoard[L][C] = boat.nameNumber;
+
+				L++;
 			}
 		}
 	}
@@ -119,7 +112,7 @@ public:
 	}
 
 	//give at the start of the game
-	void PopulateBoats() {
+	void InitBoats() {
 		Boats.Boat1.Line = new int[2];
 		Boats.Boat2.Line = new int[3];
 		Boats.Boat3.Line = new int[3];
@@ -172,7 +165,7 @@ public:
 		for (int i = 0; i < 10; i++) {
 			cout << i << " ";
 			for (int j = 0; j < 10; j++) {
-				cout << " " << MaskedBoard[i][j];			//TODO change the "realboard" to "maskedboard"
+				cout << " " << RealBoard[i][j];		//TODO change the "realboard" to "maskedboard"
 			}
 			cout << endl;
 		}
