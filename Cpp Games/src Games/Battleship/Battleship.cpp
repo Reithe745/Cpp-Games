@@ -65,6 +65,7 @@ public:
 		}
 	}
 
+	//reset all
 	void initSinglePlayerConstruct()
 	{
 		scoreP1 = 0;
@@ -73,11 +74,13 @@ public:
 		maxPointBOT = 0;
 	}
 
+	//check if current points are equal to max points
 	bool verifyWin()
 	{
 		return maxPointP1 == scoreP1;
 	}
 
+	//set max numer of points can be made
 	void maxPointForP1()
 	{
 		for (int i = 0; i < 10; i++) {
@@ -188,10 +191,13 @@ public:
 		MaskedBoard[line][column] = RealBoard[line][column];
 	}
 
-	bool CheckHit(int L, int C) {
+	//check if the player hit water of boat
+	bool CheckHit(int L, int C)
+	{
 		return RealBoard[L][C] != '~';
 	}
 
+	//show the current P1 score
 	void showScore() {
 		cout << "Points: " << scoreP1 << endl << endl;
 	}
