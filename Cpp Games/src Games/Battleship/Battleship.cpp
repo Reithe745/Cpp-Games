@@ -43,34 +43,70 @@ public:
 
 	void singleplayerMode()
 	{
+		initSinglePlayerConstruct();
 		populateBoard();
 		InitBoats();
-		AutoSetBoatPosition(Boats.Boat1);
-		AutoSetBoatPosition(Boats.Boat2);
-		AutoSetBoatPosition(Boats.Boat3);
-		AutoSetBoatPosition(Boats.Boat4);
+		AutoSetAllBoats();
+		maxPointForP1();
+		// future: maxPountForBOT();
 		playLoop();
 	}
 
 	void playLoop()
 	{
-		while (true) {
+		while (!verifyWin()) {
+
 			_windowClear();
 
+			showScore();
 			showMaskedBoard();
 
-			XY();
+			singlePlayer();
+		}
+	}
+
+	void initSinglePlayerConstruct()
+	{
+		scoreP1 = 0;
+		maxPointP1 = 0;
+		maxPointP2 = 0;
+		maxPointBOT = 0;
+	}
+
+	bool verifyWin()
+	{
+		return maxPointP1 == scoreP1;
+	}
+
+	void maxPointForP1()
+	{
+		for (int i = 0; i < 10; i++) {
+			for (int j = 0; j < 10; j++) {
+				if (RealBoard[i][j] != '~') {
+					maxPointP1++;
+				}
+			}
 		}
 	}
 
 	//see if position tryed is valid for a boat
-	bool checkValidPostion(int L, int C, int Rot, int BoatSize) {
+	bool checkValidPostion(int L, int C, int Rot, int BoatSize)
+	{
 		if (Rot == 0) {
 			return C + BoatSize < 10;
 		}
 		else {
 			return L + BoatSize < 10;
 		}
+	}
+
+	//make all boats apear
+	void AutoSetAllBoats()
+	{
+		AutoSetBoatPosition(Boats.Boat4);
+		AutoSetBoatPosition(Boats.Boat3);
+		AutoSetBoatPosition(Boats.Boat2);
+		AutoSetBoatPosition(Boats.Boat1);
 	}
 
 	//bot seting boat opsition
@@ -107,7 +143,8 @@ public:
 	}
 
 	//get a random value in a range
-	int RandVal(int maxValue) {
+	int RandVal(int maxValue)
+	{
 		return rand() % maxValue;
 	}
 
@@ -135,22 +172,28 @@ public:
 	}
 
 	//get a line and column from the player
-	void XY()
+	void singlePlayer()
 	{
-		int line, column;
+		int line = 0, column = 0;
 
 		cout << "Bomb Line: ";
 		cin >> line;
 		cout << "Bomb Column: ";
 		cin >> column;
 
+		if (CheckHit(line, column) and MaskedBoard[line][column] == '*') {
+			scoreP1++;
+		}
+
 		MaskedBoard[line][column] = RealBoard[line][column];
 	}
 
-	//unmask the spot chosen
-	bool CheckIfSpotWasBombed(int i, int j)
-	{
-		return RealBoard[i][j] != '~';
+	bool CheckHit(int L, int C) {
+		return RealBoard[L][C] != '~';
+	}
+
+	void showScore() {
+		cout << "Points: " << scoreP1 << endl << endl;
 	}
 
 	//show the hole board
@@ -165,7 +208,7 @@ public:
 		for (int i = 0; i < 10; i++) {
 			cout << i << " ";
 			for (int j = 0; j < 10; j++) {
-				cout << " " << RealBoard[i][j];		//TODO change the "realboard" to "maskedboard"
+				cout << " " << MaskedBoard[i][j];		//TODO change the "realboard" to "maskedboard"
 			}
 			cout << endl;
 		}
@@ -187,6 +230,10 @@ private:
 	BoatList Boats;
 	char RealBoard[10][10];
 	char MaskedBoard[10][10];
+	int maxPointP1;
+	int maxPointP2;
+	int maxPointBOT;
+	int scoreP1;
 	//char PlayerBoard[10][10];
 
 };
