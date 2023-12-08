@@ -58,8 +58,11 @@ public:
 
 			_windowClear();
 
+			cout << maxPointP1 << "\n" << verifyWin();
+
 			showScore();
 			showMaskedBoard();
+			showRealBoard();
 
 			singlePlayer();
 		}
@@ -103,7 +106,8 @@ public:
 		}
 	}
 
-	//make all boats apear
+	//those 2 are linked
+	//1 - make all boats apear
 	void AutoSetAllBoats()
 	{
 		AutoSetBoatPosition(Boats.Boat4);
@@ -112,7 +116,7 @@ public:
 		AutoSetBoatPosition(Boats.Boat1);
 	}
 
-	//bot seting boat opsition
+	//2 - bot seting boat opsition
 	void AutoSetBoatPosition(Boatinfo &boat)
 	{
 		int L = 10;
@@ -217,6 +221,26 @@ public:
 			cout << i << " ";
 			for (int j = 0; j < 10; j++) {
 				cout << " " << MaskedBoard[i][j];		//TODO change the "realboard" to "maskedboard"
+			}
+			cout << endl;
+		}
+	}
+
+	//DEBUG -----------------------------------------------
+	void showRealBoard()
+	{
+		cout << "  ";
+		for (int k = 0; k < 10; k++) {
+			cout << " " << k;
+		}
+
+		cout << endl;
+		cout << "   | | | | | | | | | |\n";
+
+		for (int i = 0; i < 10; i++) {
+			cout << i << " ";
+			for (int j = 0; j < 10; j++) {
+				cout << " " << RealBoard[i][j];		//TODO change the "realboard" to "maskedboard"
 			}
 			cout << endl;
 		}
