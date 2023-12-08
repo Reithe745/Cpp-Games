@@ -209,7 +209,9 @@ public:
 		for (int k = 0; k < 10; k++) {
 			cout << " " << k;
 		}
+		
 		cout << endl;
+		cout << "   | | | | | | | | | |\n";
 
 		for (int i = 0; i < 10; i++) {
 			cout << i << " ";
