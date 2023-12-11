@@ -64,7 +64,7 @@ public:
 			showMaskedBoard();
 			showRealBoard();
 
-			singlePlayer();
+			singlePlayerInput();
 		}
 	}
 
@@ -179,7 +179,7 @@ public:
 	}
 
 	//get a line and column from the player
-	void singlePlayer()
+	void singlePlayerInput()
 	{
 		int line = 0, column = 0;
 
