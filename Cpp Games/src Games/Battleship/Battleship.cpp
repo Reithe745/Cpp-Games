@@ -21,6 +21,7 @@
 
 #define RESET   "\033[0m"
 #define BLACK   "\033[30m"      /* Black */
+#define BLUE    "\033[34m"      /* Blue */
 #define RED     "\033[31m"
 
 #include "Battleship.h"
@@ -71,18 +72,22 @@ public:
 
 	void playLoop()
 	{
-		while (!verifyWin(1)) {
+		while (!verifyWin(1) and !verifyWin(0)) {
 
 			_windowClear();
 
 			showScore(0);
 			showScore(1);
 			showMaskedBoard(0);
-			showRealBoard(0);
+			//showRealBoard(0);
 			showRealBoard(1);
 
 			singlePlayerInput();
+			BotInput();
 		}
+
+		Winner();
+		system("pause");
 	}
 
 	//reset all
@@ -281,30 +286,34 @@ public:
 	{
 		int line = 0, column = 0;
 
-		cout << "Bomb Line: ";
+		/*cout << "Bomb Line: ";
 		cin >> line;
 		cout << "Bomb Column: ";
-		cin >> column;
+		cin >> column;*/
 
 		if (CheckHit(line, column, 0) and MaskedBoard[0][line][column] == '*') {
 			scorePlayer[1]++;
 		}
 
-		MaskedBoard[1][line][column] = RealBoard[0][line][column];		//TODO - Change the showing board
+		MaskedBoard[0][line][column] = RealBoard[0][line][column];		//TODO - Change the showing board
 	}
 
 	void BotInput()
 	{
-		int line = 0, column = 0;
+		int line = RandVal(10);
+		int column = RandVal(10);
 
-		line = RandVal(10);
-		column = RandVal(10);
+		while (MaskedBoard[1][line][column] != '*') {
+			line = RandVal(10);
+			column = RandVal(10);
+		}
 
-		if (CheckHit(line, column, 1) and MaskedBoard[0][line][column] == '*') {
+		if (CheckHit(line, column, 1) and MaskedBoard[1][line][column] == '*') {
 			scorePlayer[0]++;
 		}
 
-		MaskedBoard[0][line][column] = RealBoard[1][line][column];		//TODO - Change the showing board
+		MaskedBoard[1][line][column] = RealBoard[1][line][column];		//TODO - Change the showing board
+		RealBoard[1][line][column] = '*';
 	}
 
 	//check if the player hit water of boat
@@ -338,7 +347,8 @@ public:
 		for (int i = 0; i < 10; i++) {
 			cout << i << " ";
 			for (int j = 0; j < 10; j++) {
-				cout << " " << MaskedBoard[player][i][j];
+				if (MaskedBoard[player][i][j] == '~') cout << BLUE << " " << MaskedBoard[player][i][j] << RESET;
+				else cout << " " << MaskedBoard[player][i][j];
 			}
 			cout << endl;
 		}
@@ -358,7 +368,8 @@ public:
 		for (int i = 0; i < 10; i++) {
 			cout << i << " ";
 			for (int j = 0; j < 10; j++) {
-				cout << " " << RealBoard[player][i][j];
+				if (RealBoard[player][i][j] == '*') cout << RED << " " << RealBoard[player][i][j] << RESET;
+				else cout << " " << RealBoard[player][i][j];
 			}
 			cout << endl;
 		}
@@ -377,6 +388,12 @@ public:
 				MaskedBoard[2][i][j] = '*';
 			}
 		}
+	}
+
+	void Winner() {
+		if (maxPointPlayer[0] == scorePlayer[0]) cout << "The bot has won!!!!" << "\n";
+		else if (maxPointPlayer[1] == scorePlayer[1]) cout << "Player 1 has won!!!!" << "\n";
+		else cout << "Player 2 has won!!!!" << "\n";
 	}
 
 private:
