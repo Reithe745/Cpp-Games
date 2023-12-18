@@ -9,6 +9,20 @@
 												 |_|
 */
 
+/*
+1 - Menu
+	Single player mode
+	1.1 - Ask the position all 4 boats
+	1.2 - add the boats to RealBoard 1 and variables 1
+	1.3 - bot chooses it's positions in the board
+	1.4 - add the boats to RealBoard 0 and variables 0
+	1.5 - play game
+*/
+
+#define RESET   "\033[0m"
+#define BLACK   "\033[30m"      /* Black */
+#define RED     "\033[31m"
+
 #include "Battleship.h"
 #include <Menu.h>
 #include <iostream>
@@ -31,10 +45,10 @@ struct Boatinfo {
 
 struct BoatList {
 
-	Boatinfo Boat4;
-	Boatinfo Boat3;
-	Boatinfo Boat2;
-	Boatinfo Boat1;
+	Boatinfo Boat4[3];
+	Boatinfo Boat3[3];
+	Boatinfo Boat2[3];
+	Boatinfo Boat1[3];
 };
 
 class BS_Game_obj {
@@ -43,26 +57,29 @@ public:
 
 	void singleplayerMode()
 	{
+		bool singlePlayerMode = true;
+
 		initSinglePlayerConstruct();
 		populateBoard();
 		InitBoats();
-		AutoSetAllBoats();
-		maxPointForP1();
-		// future: maxPountForBOT();
+		SetBOTBoats();
+		SetPlayerBoats(1);
+		maxPointForPlayer(0, singlePlayerMode);
+		maxPointForPlayer(1, singlePlayerMode);
 		playLoop();
 	}
 
 	void playLoop()
 	{
-		while (!verifyWin()) {
+		while (!verifyWin(1)) {
 
 			_windowClear();
 
-			cout << maxPointP1 << "\n" << verifyWin();
-
-			showScore();
-			showMaskedBoard();
-			showRealBoard();
+			showScore(0);
+			showScore(1);
+			showMaskedBoard(0);
+			showRealBoard(0);
+			showRealBoard(1);
 
 			singlePlayerInput();
 		}
@@ -71,27 +88,56 @@ public:
 	//reset all
 	void initSinglePlayerConstruct()
 	{
-		scoreP1 = 0;
-		maxPointP1 = 0;
-		maxPointP2 = 0;
-		maxPointBOT = 0;
+		for (int i = 0; i < 3; i++) {
+			maxPointPlayer[i] = 0;
+			scorePlayer[i] = 0;
+		}
 	}
 
 	//check if current points are equal to max points
-	bool verifyWin()
+	bool verifyWin(int player)
 	{
-		return maxPointP1 == scoreP1;
+		return maxPointPlayer[player] == scorePlayer[player];
 	}
 
 	//set max numer of points can be made
-	void maxPointForP1()
+	void maxPointForPlayer(int player, bool singleplayer)
 	{
-		for (int i = 0; i < 10; i++) {
-			for (int j = 0; j < 10; j++) {
-				if (RealBoard[i][j] != '~') {
-					maxPointP1++;
+		switch (player)
+		{
+		case 0:
+
+			for (int i = 0; i < 10; i++) {
+				for (int j = 0; j < 10; j++) {
+					if (RealBoard[1][i][j] != '~') {
+						maxPointPlayer[0]++;
+					}
 				}
 			}
+			break;
+
+		case 1:
+			if (singleplayer == true) {
+				for (int i = 0; i < 10; i++) {
+					for (int j = 0; j < 10; j++) {
+						if (RealBoard[0][i][j] != '~') {
+							maxPointPlayer[1]++;
+						}
+					}
+				}
+			}
+			else {
+				for (int i = 0; i < 10; i++) {
+					for (int j = 0; j < 10; j++) {
+						if (RealBoard[2][i][j] != '~') {
+							maxPointPlayer[1]++;
+						}
+					}
+				}
+			}
+
+		default:
+			break;
 		}
 	}
 
@@ -108,12 +154,20 @@ public:
 
 	//those 2 are linked
 	//1 - make all boats apear
-	void AutoSetAllBoats()
+	void SetBOTBoats()
 	{
-		AutoSetBoatPosition(Boats.Boat4);
-		AutoSetBoatPosition(Boats.Boat3);
-		AutoSetBoatPosition(Boats.Boat2);
-		AutoSetBoatPosition(Boats.Boat1);
+		AutoSetBoatPosition(Boats.Boat4[0]);
+		AutoSetBoatPosition(Boats.Boat3[0]);
+		AutoSetBoatPosition(Boats.Boat2[0]);
+		AutoSetBoatPosition(Boats.Boat1[0]);
+	}
+
+	void SetPlayerBoats(int player)
+	{
+		PlayerSetBoatPosition(Boats.Boat4[player], player);
+		PlayerSetBoatPosition(Boats.Boat3[player], player);
+		PlayerSetBoatPosition(Boats.Boat2[player], player);
+		PlayerSetBoatPosition(Boats.Boat1[player], player);
 	}
 
 	//2 - bot seting boat opsition
@@ -124,6 +178,7 @@ public:
 		int Rotation = 0; // 0 Vertical, 1 Horizontal
 
 		while (!checkValidPostion(L, C, Rotation, boat.size)) {
+
 			L = RandVal(10);
 			C = RandVal(10);
 			Rotation = RandVal(2); // 0 Vertical, 1 Horizontal
@@ -134,7 +189,7 @@ public:
 
 				boat.Column[i] = C;
 				boat.Line[i] = L;
-				RealBoard[L][C] = boat.nameNumber;
+				RealBoard[0][L][C] = boat.nameNumber;
 
 				C++;
 			}
@@ -142,7 +197,47 @@ public:
 
 				boat.Line[i] = L;
 				boat.Column[i] = C;
-				RealBoard[L][C] = boat.nameNumber;
+				RealBoard[0][L][C] = boat.nameNumber;
+
+				L++;
+			}
+		}
+	}
+
+	void PlayerSetBoatPosition(Boatinfo& boat, int player)
+	{
+		int L = 10;
+		int C = 10;
+		int Rotation = 0; // 0 Vertical, 1 Horizontal
+
+		_windowClear();
+
+		while (!checkValidPostion(L, C, Rotation, boat.size)) {
+			
+			showRealBoard(player);
+
+			cout << "Choose your boat LINE position: ";
+			cin >> L;
+			cout << "Choose your boat COLUMN position: ";
+			cin >> C;
+			cout << "Choose your boat ROTATION position: ";
+			cin >> Rotation;
+		}
+
+		for (int i = 0; i < boat.size; i++) {
+			if (Rotation == 0) {
+
+				boat.Column[i] = C;
+				boat.Line[i] = L;
+				RealBoard[player][L][C] = boat.nameNumber;
+
+				C++;
+			}
+			else {
+
+				boat.Line[i] = L;
+				boat.Column[i] = C;
+				RealBoard[player][L][C] = boat.nameNumber;
 
 				L++;
 			}
@@ -156,26 +251,29 @@ public:
 	}
 
 	//give at the start of the game
-	void InitBoats() {
-		Boats.Boat1.Line = new int[2];
-		Boats.Boat2.Line = new int[3];
-		Boats.Boat3.Line = new int[3];
-		Boats.Boat4.Line = new int[4];
+	void InitBoats()
+	{
+		for (int i = 0; i < 3; i++) {
+			Boats.Boat1[i].Line = new int[2];
+			Boats.Boat2[i].Line = new int[3];
+			Boats.Boat3[i].Line = new int[3];
+			Boats.Boat4[i].Line = new int[4];
 
-		Boats.Boat1.Column = new int[2];
-		Boats.Boat2.Column = new int[3];
-		Boats.Boat3.Column = new int[3];
-		Boats.Boat4.Column = new int[4];
+			Boats.Boat1[i].Column = new int[2];
+			Boats.Boat2[i].Column = new int[3];
+			Boats.Boat3[i].Column = new int[3];
+			Boats.Boat4[i].Column = new int[4];
 
-		Boats.Boat1.size = 2;
-		Boats.Boat2.size = 3;
-		Boats.Boat3.size = 3;
-		Boats.Boat4.size = 4;
+			Boats.Boat1[i].size = 2;
+			Boats.Boat2[i].size = 3;
+			Boats.Boat3[i].size = 3;
+			Boats.Boat4[i].size = 4;
 
-		Boats.Boat1.nameNumber = '1';
-		Boats.Boat2.nameNumber = '2';
-		Boats.Boat3.nameNumber = '3';
-		Boats.Boat4.nameNumber = '4';
+			Boats.Boat1[i].nameNumber = '1';
+			Boats.Boat2[i].nameNumber = '2';
+			Boats.Boat3[i].nameNumber = '3';
+			Boats.Boat4[i].nameNumber = '4';
+		}
 	}
 
 	//get a line and column from the player
@@ -188,26 +286,46 @@ public:
 		cout << "Bomb Column: ";
 		cin >> column;
 
-		if (CheckHit(line, column) and MaskedBoard[line][column] == '*') {
-			scoreP1++;
+		if (CheckHit(line, column, 0) and MaskedBoard[0][line][column] == '*') {
+			scorePlayer[1]++;
 		}
 
-		MaskedBoard[line][column] = RealBoard[line][column];
+		MaskedBoard[1][line][column] = RealBoard[0][line][column];		//TODO - Change the showing board
+	}
+
+	void BotInput()
+	{
+		int line = 0, column = 0;
+
+		line = RandVal(10);
+		column = RandVal(10);
+
+		if (CheckHit(line, column, 1) and MaskedBoard[0][line][column] == '*') {
+			scorePlayer[0]++;
+		}
+
+		MaskedBoard[0][line][column] = RealBoard[1][line][column];		//TODO - Change the showing board
 	}
 
 	//check if the player hit water of boat
-	bool CheckHit(int L, int C)
+	bool CheckHit(int L, int C, int player)
 	{
-		return RealBoard[L][C] != '~';
+		return RealBoard[player][L][C] != '~';
 	}
 
 	//show the current P1 score
-	void showScore() {
-		cout << "Points: " << scoreP1 << endl << endl;
+	void showScore(int player) {
+		
+		string name;
+
+		if (player == 0) name = "BOT";
+		else name = "Player " + to_string(player);
+		
+		cout << name << " points: " << scorePlayer[player] << endl;
 	}
 
 	//show the hole board
-	void showMaskedBoard()
+	void showMaskedBoard(int player)
 	{
 		cout << "  ";
 		for (int k = 0; k < 10; k++) {
@@ -220,14 +338,14 @@ public:
 		for (int i = 0; i < 10; i++) {
 			cout << i << " ";
 			for (int j = 0; j < 10; j++) {
-				cout << " " << MaskedBoard[i][j];		//TODO change the "realboard" to "maskedboard"
+				cout << " " << MaskedBoard[player][i][j];
 			}
 			cout << endl;
 		}
 	}
 
 	//DEBUG -----------------------------------------------
-	void showRealBoard()
+	void showRealBoard(int player)
 	{
 		cout << "  ";
 		for (int k = 0; k < 10; k++) {
@@ -240,7 +358,7 @@ public:
 		for (int i = 0; i < 10; i++) {
 			cout << i << " ";
 			for (int j = 0; j < 10; j++) {
-				cout << " " << RealBoard[i][j];		//TODO change the "realboard" to "maskedboard"
+				cout << " " << RealBoard[player][i][j];
 			}
 			cout << endl;
 		}
@@ -251,8 +369,12 @@ public:
 	{
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 10; j++) {
-				RealBoard[i][j] = '~';
-				MaskedBoard[i][j] = '*';
+				RealBoard[0][i][j] = '~';
+				RealBoard[1][i][j] = '~';
+				RealBoard[2][i][j] = '~';
+				MaskedBoard[0][i][j] = '*';
+				MaskedBoard[1][i][j] = '*';
+				MaskedBoard[2][i][j] = '*';
 			}
 		}
 	}
@@ -260,12 +382,10 @@ public:
 private:
 
 	BoatList Boats;
-	char RealBoard[10][10];
-	char MaskedBoard[10][10];
-	int maxPointP1;
-	int maxPointP2;
-	int maxPointBOT;
-	int scoreP1;
+	char RealBoard[3][10][10];		//0 - bot ; 1 - P1 ; 2 - P2
+	char MaskedBoard[3][10][10];	//0 - bot ; 1 - P1 ; 2 - P2
+	int maxPointPlayer[3];			//0 - bot ; 1 - P1 ; 2 - P2
+	int scorePlayer[3];				//0 - bot ; 1 - P1 ; 2 - P2
 	//char PlayerBoard[10][10];
 
 };
