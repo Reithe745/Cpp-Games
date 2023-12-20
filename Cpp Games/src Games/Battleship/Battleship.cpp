@@ -86,6 +86,8 @@ public:
 			BotInput();
 		}
 
+		_windowClear();
+
 		Winner();
 		system("pause");
 	}
@@ -219,13 +221,16 @@ public:
 
 		while (!checkValidPostion(L, C, Rotation, boat.size)) {
 			
+			cout << "Player " << player << ", choose the location of boat" << "\n";
+			cout << "Boat size -> " << boat.size << "\n\n";
+
 			showRealBoard(player);
 
 			cout << "Choose your boat LINE position: ";
 			cin >> L;
 			cout << "Choose your boat COLUMN position: ";
 			cin >> C;
-			cout << "Choose your boat ROTATION position: ";
+			cout << "0 - Vertical\n1 - Horizontal\nChoose your boat ROTATION position: ";
 			cin >> Rotation;
 		}
 
@@ -286,10 +291,10 @@ public:
 	{
 		int line = 0, column = 0;
 
-		/*cout << "Bomb Line: ";
+		cout << "Bomb Line: ";
 		cin >> line;
 		cout << "Bomb Column: ";
-		cin >> column;*/
+		cin >> column;
 
 		if (CheckHit(line, column, 0) and MaskedBoard[0][line][column] == '*') {
 			scorePlayer[1]++;
