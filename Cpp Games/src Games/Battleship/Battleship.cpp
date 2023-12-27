@@ -152,10 +152,10 @@ public:
 	bool checkValidPostion(int L, int C, int Rot, int BoatSize)
 	{
 		if (Rot == 0) {
-			return C + BoatSize < 10;
+			return C + BoatSize <= 10;
 		}
 		else {
-			return L + BoatSize < 10;
+			return L + BoatSize <= 10;
 		}
 	}
 
@@ -211,6 +211,7 @@ public:
 		}
 	}
 
+	//player input to set boats in the board
 	void PlayerSetBoatPosition(Boatinfo& boat, int player)
 	{
 		int L = 10;
