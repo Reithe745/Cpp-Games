@@ -8,7 +8,7 @@ using namespace std;
 
 class H_Game_Object {
 	public:
-
+		//
 };
 
 static void _windowClear()
