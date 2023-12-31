@@ -134,11 +134,13 @@
     <ClCompile Include="src Games\Battleship\Battleship.cpp" />
     <ClCompile Include="src Games\Hangman\HangMan.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="src Games\Hash\Hash.cpp" />
     <ClCompile Include="src Games\Menu.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src Games\Battleship\Battleship.h" />
     <ClInclude Include="src Games\Hangman\HangMan.h" />
+    <ClInclude Include="src Games\Hash\Hash.h" />
     <ClInclude Include="src Games\Menu.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

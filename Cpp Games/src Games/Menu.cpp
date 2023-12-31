@@ -11,6 +11,7 @@
 #include "Menu.h"
 #include <Hangman/HangMan.h>
 #include <Battleship/Battleship.h>
+#include <Hash/Hash.h>
 #include <iostream>
 
 using namespace std;
@@ -56,6 +57,8 @@ void mainMenu() {
 			break;
 		case 3:
 			//hash
+			Run_Hash();
+			return;
 			break;
 		case 4:
 			//about

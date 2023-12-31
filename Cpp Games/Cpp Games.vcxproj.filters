@@ -27,6 +27,9 @@
     <ClCompile Include="src Games\Battleship\Battleship.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src Games\Hash\Hash.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src Games\Menu.h">
@@ -36,6 +39,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src Games\Battleship\Battleship.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src Games\Hash\Hash.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

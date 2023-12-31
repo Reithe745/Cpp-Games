@@ -431,7 +431,7 @@ void BS_option() {
 		BattleshipLogo();
 
 		cout << "1 - Single Player" << endl;
-		cout << "2 - Multi Player" << endl;
+		//cout << "2 - Multi Player" << endl;
 		cout << "3 - Main menu" << endl;
 		cout << "4 - Quit" << endl;
 		cout << "> ";
