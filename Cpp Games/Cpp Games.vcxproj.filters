@@ -30,6 +30,9 @@
     <ClCompile Include="src Games\Hash\Hash.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src Games\TEMPLATE\Template.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src Games\Menu.h">
@@ -42,6 +45,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src Games\Hash\Hash.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src Games\TEMPLATE\Template.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
