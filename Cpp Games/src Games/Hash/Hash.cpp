@@ -6,21 +6,63 @@
 
 using namespace std;
 
-class H_Game_Object {
-	public:
-		//
-};
-
+// Clear window
 static void _windowClear()
 {
 	system("cls");
 }
 
+// Game class
+class H_Game_Object {
+
+public:
+	
+	void SinglePLayerMode() {
+
+		PopulateTableDEBUG();
+		PrintTable();
+
+		system("pause");
+	}
+
+	void PrintTable() 
+	{
+		for (int i = 0; i <= 2; i++) {
+			for (int j = 0; j <= 2; j++) {
+				
+				cout << Table[i][j];
+
+				if (j != 2) cout << "|";
+			}
+			
+			if (i != 2) cout << "\n" << "-----" << "\n";
+
+			else cout << "\n";
+		}
+	}
+
+	void PopulateTableDEBUG()
+	{
+		for (int i = 0; i <= 2; i++) {
+			for (int j = 0; j <= 2; j++) {
+				Table[i][j] = '~';
+			}
+		}
+	}
+
+private:
+	char Table[3][3];			// game table
+
+
+};
+
+// Logo
 void HashLogo()
 {
 	cout << "Welcome to Hash\n" << endl;
 }
 
+// Hash menu
 void H_option()
 {
 	int op = 0;
@@ -43,6 +85,7 @@ void H_option()
 		switch (op) {
 		case 1:
 			//play game
+			HGameObject.SinglePLayerMode();
 			break;
 		case 2:
 			//multiplayer
