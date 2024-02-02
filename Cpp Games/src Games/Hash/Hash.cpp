@@ -20,8 +20,29 @@ public:
 	void SinglePLayerMode() {
 
 		PopulateTableDEBUG();
-		PrintTable();
+		
+		system("cls");
 
+		while (true) {
+
+			PrintTable();
+
+			while (!ChooseSpotPlayer(Player1Symbol));
+
+			if (VerifyWin(Player1Symbol, BotSymbol)) break;
+
+			system("cls");
+
+			PrintTable();
+
+			while (!ChooseSpotPlayer(Player2Symbol));
+
+			if (VerifyWin(Player1Symbol, BotSymbol)) break;
+
+			system("cls");
+		}
+
+		cout << "The winner is " << WinnerSimbol << ", Congrats!!!" << "\n";
 		system("pause");
 	}
 
@@ -36,23 +57,93 @@ public:
 			}
 			
 			if (i != 2) cout << "\n" << "-----" << "\n";
-
+			
 			else cout << "\n";
 		}
+	}
+
+	bool ChooseSpotPlayer(char pS) 
+	{
+		int Row = -1, Column = -1;
+		
+		cout << "Choose a ROW from 1 to 3" << "\n";
+		while (Row < 0 or Row > 3) cin >> Row;
+
+		cout << "Choose a COLUMN from 1 to 3" << "\n";
+		while (Column < 0 or Column > 3) cin >> Column;
+
+		if (ValidPosition(Row - 1, Column - 1)) {
+
+			Table[Row - 1][Column - 1] = pS;
+			return true;
+		}
+		else {
+
+			cout << "This position is taken" << "\n";
+			return false;
+		}
+	}
+
+	bool ValidPosition(int R, int C)
+	{
+		return Table[R][C] != 'X' and Table[R][C] != 'O';
+	}
+
+	bool VerifyWin(char p1S, char p2S)
+	{
+		for (int i = 0; i <= 2; i++) {
+			if (Table[i][0] == p1S && Table[i][1] == p1S && Table[i][2] == p1S) {
+				WinnerSimbol = 'X';
+				return true;
+			}
+			if (Table[i][0] == p2S && Table[i][1] == p2S && Table[i][2] == p2S) {
+				WinnerSimbol = 'O';
+				return true;
+			}
+			if (Table[0][i] == p1S && Table[1][i] == p1S && Table[2][i] == p1S) {
+				WinnerSimbol = 'X';
+				return true;
+			} 
+			if (Table[0][i] == p2S && Table[1][i] == p2S && Table[2][i] == p2S) {
+				WinnerSimbol = 'O';
+				return true;
+			}
+		}
+		if (Table[0][0] == p1S && Table[1][1] == p1S && Table[2][2] == p1S) {
+			WinnerSimbol = 'X';
+			return true;
+		}
+		if (Table[0][0] == p2S && Table[1][1] == p2S && Table[2][2] == p2S) {
+			WinnerSimbol = 'O';
+			return true;
+		}
+		if (Table[2][0] == p1S && Table[1][1] == p1S && Table[0][2] == p1S) {
+			WinnerSimbol = 'X';
+			return true;
+		}
+		if (Table[2][0] == p2S && Table[1][1] == p2S && Table[0][2] == p2S) {
+			WinnerSimbol = 'O';
+			return true;
+		}
+
+		return false;
 	}
 
 	void PopulateTableDEBUG()
 	{
 		for (int i = 0; i <= 2; i++) {
 			for (int j = 0; j <= 2; j++) {
-				Table[i][j] = '~';
+				Table[i][j] = ' ';
 			}
 		}
 	}
 
 private:
 	char Table[3][3];			// game table
-
+	char Player1Symbol = 'X';
+	char Player2Symbol = 'O';
+	char BotSymbol = 'O';
+	char WinnerSimbol;
 
 };
 
