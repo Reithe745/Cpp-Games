@@ -17,33 +17,52 @@ class H_Game_Object {
 
 public:
 	
-	void SinglePLayerMode() {
+	void MultiplayerMode() {
 
 		PopulateTableDEBUG();
 		
 		system("cls");
 
-		while (true) {
+		while (plays < 9) {
+
+			cout << "Player X" << "\n\n";
 
 			PrintTable();
 
 			while (!ChooseSpotPlayer(Player1Symbol));
 
-			if (VerifyWin(Player1Symbol, BotSymbol)) break;
+			plays++;
+
+			if ((VerifyWin(Player1Symbol, BotSymbol)) or plays == 9) break;
 
 			system("cls");
+
+			cout << "Player O" << "\n";
 
 			PrintTable();
 
 			while (!ChooseSpotPlayer(Player2Symbol));
 
-			if (VerifyWin(Player1Symbol, BotSymbol)) break;
+			plays++;
+
+			if ((VerifyWin(Player1Symbol, BotSymbol)) or plays == 9) break;
 
 			system("cls");
 		}
 
-		cout << "The winner is " << WinnerSimbol << ", Congrats!!!" << "\n";
-		system("pause");
+		system("cls");
+
+		PrintTable();
+
+		if (VerifyWin(Player1Symbol, BotSymbol)) {
+			cout << "\n" << "The winner is " << WinnerSimbol << ", Congrats!!!" << "\n";
+			system("pause");
+		}
+		else {
+			cout << "\n" << "DRAW..." << "\n";
+			system("pause");
+		}
+		plays = 0;
 	}
 
 	void PrintTable() 
@@ -144,6 +163,7 @@ private:
 	char Player2Symbol = 'O';
 	char BotSymbol = 'O';
 	char WinnerSimbol;
+	int plays = 0;
 
 };
 
@@ -176,10 +196,10 @@ void H_option()
 		switch (op) {
 		case 1:
 			//play game
-			HGameObject.SinglePLayerMode();
 			break;
 		case 2:
 			//multiplayer
+			HGameObject.MultiplayerMode();
 			break;
 		case 3:
 			//menu
